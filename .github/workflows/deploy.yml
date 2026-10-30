@@ -3,7 +3,12 @@ name: Deploy GitHub Pages
 on:
   push:
     branches: [main]
+  # Botão "Run workflow" no Actions (é para onde o "Republicar site" do Ademiro aponta).
   workflow_dispatch:
+  # Rebuild a cada 6h para gerar a página de posts publicados desde o último deploy.
+  # O GitHub pausa agendamentos após 60 dias sem atividade no repositório.
+  schedule:
+    - cron: '0 */6 * * *'
 
 permissions:
   contents: read

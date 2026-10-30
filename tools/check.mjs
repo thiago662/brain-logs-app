@@ -53,6 +53,7 @@ const out = {};
 
 await go(`${BASE}/`);
 out.home = await evaluate(`document.title + ' | cards=' + document.querySelectorAll('.post-card').length + ' | primeiro=' + (document.querySelector('.post-card h3')?.textContent ?? '-')`);
+out.ogImageHome = await evaluate(`document.querySelector('meta[property="og:image"]')?.content ?? '-'`);
 out.firestoreNaHome = firestoreRequests.length; // esperado 0: dados vêm no HTML (TransferState)
 const firstSlug = await evaluate(`document.querySelector('.post-card')?.getAttribute('href')?.replace(/^\\//, '') ?? ''`);
 

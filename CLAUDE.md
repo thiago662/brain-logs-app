@@ -44,6 +44,8 @@ src/environments/
   firebase.config.example.ts    commitado: modelo vazio
   firebase.config.ts            IGNORADO pelo git: config real do Firebase
 tools/check.mjs          teste no Chrome headless do build (npm run check)
+tools/sitemap.mjs        gera sitemap.xml das páginas pré-renderizadas (roda sozinho no postbuild)
+public/                  favicon (svg/ico), apple-touch-icon, og-default.png (1200x630, imagem padrão de compartilhamento), robots.txt
 .github/workflows/deploy.yml
 ```
 

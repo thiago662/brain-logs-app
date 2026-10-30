@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://thiago662.github.io/brain-logs-app/sitemap.xml

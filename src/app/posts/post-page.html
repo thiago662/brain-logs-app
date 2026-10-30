@@ -5,9 +5,24 @@
       @if (post.subtitle) {
         <p class="lead text-body-secondary">{{ post.subtitle }}</p>
       }
-      <p class="small text-body-secondary mb-2">{{ post.publishedAt | date: 'longDate' }}</p>
-      @for (tag of post.tags; track tag) {
-        <span class="badge text-bg-secondary me-1">{{ tag }}</span>
+      <p class="small text-body-secondary mb-2">
+        @if (blog()?.settings; as s) {
+          @if (s.autor) {
+            @if (s.linkedin) {
+              <a [href]="s.linkedin" target="_blank" rel="noopener">{{ s.autor }}</a>
+            } @else {
+              {{ s.autor }}
+            }
+            ·
+          }
+        }
+        {{ post.publishedAt | date: 'longDate' }}
+      </p>
+      @for (n of post.custom.nivel; track n) {
+        <span class="badge text-bg-primary me-1">{{ n }}</span>
+      }
+      @for (t of post.custom.stack.length ? post.custom.stack : post.tags; track t) {
+        <span class="badge text-bg-secondary me-1">{{ t }}</span>
       }
     </header>
 

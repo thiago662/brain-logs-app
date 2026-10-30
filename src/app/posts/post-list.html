@@ -2,7 +2,17 @@
   <header class="mb-4">
     <h1 class="h3">{{ blog.name }}</h1>
     @if (blog.description) {
-      <p class="text-body-secondary">{{ blog.description }}</p>
+      <p class="text-body-secondary mb-1">{{ blog.description }}</p>
+    }
+    @if (blog.settings.autor) {
+      <p class="small text-body-secondary mb-0">
+        por
+        @if (blog.settings.linkedin) {
+          <a [href]="blog.settings.linkedin" target="_blank" rel="noopener">{{ blog.settings.autor }}</a>
+        } @else {
+          {{ blog.settings.autor }}
+        }
+      </p>
     }
   </header>
 }
@@ -17,10 +27,17 @@
           } @else {
             <div class="card-img-top cover bg-dark"></div>
           }
+          @let stack = post.custom.stack.length ? post.custom.stack : post.tags;
           <div class="card-body">
+            @for (n of post.custom.nivel; track n) {
+              <span class="badge text-bg-primary me-1 mb-2">{{ n }}</span>
+            }
             <h2 class="h5 card-title">{{ post.title }}</h2>
             @if (post.subtitle) {
               <p class="card-text text-body-secondary">{{ post.subtitle }}</p>
+            }
+            @for (t of stack.slice(0, 3); track t) {
+              <span class="badge text-bg-secondary me-1">{{ t }}</span>
             }
           </div>
           <div class="card-footer bg-transparent border-0 small text-body-secondary">

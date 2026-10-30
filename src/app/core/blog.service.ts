@@ -13,6 +13,7 @@ import {
   type QueryDocumentSnapshot,
 } from 'firebase/firestore/lite';
 import { environment } from '../../environments/environment';
+import { readCustom, readSettings, type BlogSettings, type PostCustom } from './fields';
 
 // Firestore lite: só leitura via REST, menor no navegador e funciona no prerender (Node).
 const db = getFirestore(initializeApp(environment.firebase));
@@ -21,8 +22,8 @@ export interface BlogInfo {
   id: string;
   name: string;
   description: string;
-  /** Valores dos campos de escopo "blog" no Ademiro (ex.: autor, linkedin). */
-  settings: Record<string, unknown>;
+  /** Campos de escopo "blog" no Ademiro. */
+  settings: BlogSettings;
 }
 
 export interface PostSummary {
@@ -35,8 +36,8 @@ export interface PostSummary {
   tags: string[];
   /** ISO 8601 (serializável no TransferState). */
   publishedAt: string | null;
-  /** Valores dos campos de escopo "post" no Ademiro (ex.: nivel, stack). */
-  custom: Record<string, unknown>;
+  /** Campos de escopo "post" no Ademiro. */
+  custom: PostCustom;
 }
 
 export interface Post extends PostSummary {
@@ -55,7 +56,7 @@ function toSummary(snap: QueryDocumentSnapshot<DocumentData>): PostSummary {
     coverUrl: d['coverUrl'] ?? '',
     tags: d['tags'] ?? [],
     publishedAt: d['publishedAt']?.toDate().toISOString() ?? null,
-    custom: d['custom'] ?? {},
+    custom: readCustom(d['custom']),
   };
 }
 
@@ -77,7 +78,7 @@ export class BlogService {
       const [snap] = (await getDocs(query(blogs, where('slug', '==', environment.blogSlug), limit(1)))).docs;
       if (!snap) return null;
       const d = snap.data();
-      return { id: snap.id, name: d['name'] ?? '', description: d['description'] ?? '', settings: d['settings'] ?? {} };
+      return { id: snap.id, name: d['name'] ?? '', description: d['description'] ?? '', settings: readSettings(d['settings']) };
     }));
   }
 

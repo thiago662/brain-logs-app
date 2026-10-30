@@ -19,8 +19,19 @@ npm start          # http://localhost:4200
 
 O blog só lê posts **publicados** — as Security Rules do Ademiro não liberam rascunhos.
 
+| Comando | Uso |
+|---|---|
+| `npm start` | servidor de desenvolvimento |
+| `npm run build` | build de produção com uma página pré-renderizada por post |
+| `npm test -- --watch=false` | testes unitários |
+| `npm run check` | após o build, testa as páginas no Chrome headless (requer Chrome) |
+
 ## Deploy
 
 1. **Settings → Pages → Source:** `GitHub Actions`.
 2. **Settings → Secrets and variables → Actions → New repository secret** `FIREBASE_CONFIG` com o objeto do console (só o `{ ... }`).
 3. Push na `main` publica em `https://<usuario>.github.io/brain-logs-app/`.
+
+O deploy também roda **a cada 6h** e manualmente (*Actions → Deploy GitHub Pages → Run workflow*), para posts publicados no Ademiro ganharem página própria.
+
+Detalhes técnicos e decisões: [CLAUDE.md](CLAUDE.md) e [PLAN.md](PLAN.md).

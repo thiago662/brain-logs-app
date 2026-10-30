@@ -45,9 +45,9 @@ Blog técnico (tecnologia, estudos, carreira) publicado em `https://thiago662.gi
 ### Fase 3 — Prerender e publicação
 - [x] No build, listar os slugs publicados no Firestore e gerar uma página por post (`getPrerenderParams`)
 - [x] Workflow de deploy no push, manual e agendado (a cada 6h)
-- [ ] No ademiro: URL pública `https://thiago662.github.io/brain-logs-app` e URL do deploy `https://github.com/thiago662/brain-logs-app/actions/workflows/deploy.yml`
+- [x] No ademiro: URL pública `https://thiago662.github.io/brain-logs-app` e URL do deploy `https://github.com/thiago662/brain-logs-app/actions/workflows/deploy.yml`
 
-### Fase 4 — Visual ✅ (código; falta criar os campos no ademiro para ver os dados reais)
+### Fase 4 — Visual ✅ (campos criados no ademiro; falta um post real para ver nível e stack)
 - [x] Trazer os cards com capa do projeto antigo (capa, nível, título, subtítulo, até 3 de stack, data)
 - [x] Autor e LinkedIn (valores do blog); nível e stack (campos do post) — tipados em `core/fields.ts`, tolerando ausência; LinkedIn só `https://`; sem `stack`, usa `tags`
 

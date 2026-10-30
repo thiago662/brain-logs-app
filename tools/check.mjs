@@ -52,12 +52,12 @@ await send('Runtime.enable'); await send('Log.enable'); await send('Page.enable'
 const out = {};
 
 await go(`${BASE}/`);
-out.home = await evaluate(`document.title + ' | cards=' + document.querySelectorAll('.card').length + ' | primeiro=' + (document.querySelector('.card h2')?.textContent ?? '-')`);
+out.home = await evaluate(`document.title + ' | cards=' + document.querySelectorAll('.post-card').length + ' | primeiro=' + (document.querySelector('.post-card h3')?.textContent ?? '-')`);
 out.firestoreNaHome = firestoreRequests.length; // esperado 0: dados vêm no HTML (TransferState)
-const firstSlug = await evaluate(`document.querySelector('.card')?.getAttribute('href')?.replace(/^\\//, '') ?? ''`);
+const firstSlug = await evaluate(`document.querySelector('.post-card')?.getAttribute('href')?.replace(/^\\//, '') ?? ''`);
 
 firestoreRequests = [];
-await evaluate(`document.querySelector('.card')?.click()`);
+await evaluate(`document.querySelector('.post-card')?.click()`);
 await sleep(3000);
 out.navegacaoInterna = await evaluate(`location.pathname + ' | ' + document.title + ' | corpo=' + (document.querySelector('.post-body')?.textContent.trim().slice(0, 40) ?? '-')`);
 out.firestoreNaNavegacao = firestoreRequests.length; // > 0 é normal: navegação interna busca no Firestore

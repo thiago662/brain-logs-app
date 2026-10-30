@@ -1,4 +1,4 @@
-import { readCustom, readSettings } from './fields';
+import { nivelKey, readCustom, readSettings } from './fields';
 
 describe('readSettings', () => {
   it('lê autor e linkedin', () => {
@@ -27,5 +27,12 @@ describe('readCustom', () => {
   it('tolera ausente e itens inválidos', () => {
     expect(readCustom(null)).toEqual({ nivel: [], stack: [] });
     expect(readCustom({ nivel: 3, stack: ['a', 2, '', null] })).toEqual({ nivel: [], stack: ['a'] });
+  });
+});
+
+describe('nivelKey', () => {
+  it('tira acento e usa minúscula', () => {
+    expect(nivelKey('Intermediário')).toBe('intermediario');
+    expect(nivelKey('avançado')).toBe('avancado');
   });
 });

@@ -1,13 +1,25 @@
 @if (post(); as post) {
-  <article class="mx-auto post">
-    <header class="mb-4">
-      <h1 class="fw-bold">{{ post.title }}</h1>
-      @if (post.subtitle) {
-        <p class="lead text-body-secondary">{{ post.subtitle }}</p>
+  <article class="post">
+    <header class="head">
+      @let stack = post.custom.stack.length ? post.custom.stack : post.tags;
+      @if (post.custom.nivel.length || stack.length) {
+        <div class="chips">
+          @for (n of post.custom.nivel; track n) {
+            <span class="chip nivel" [attr.data-nivel]="nivelKey(n)">{{ n }}</span>
+          }
+          @for (t of stack; track t) {
+            <span class="chip">{{ t }}</span>
+          }
+        </div>
       }
-      <p class="small text-body-secondary mb-2">
+      <h1>{{ post.title }}</h1>
+      @if (post.subtitle) {
+        <p class="sub">{{ post.subtitle }}</p>
+      }
+      <p class="meta">
         @if (blog()?.settings; as s) {
           @if (s.autor) {
+            por
             @if (s.linkedin) {
               <a [href]="s.linkedin" target="_blank" rel="noopener">{{ s.autor }}</a>
             } @else {
@@ -18,22 +30,18 @@
         }
         {{ post.publishedAt | date: 'longDate' }}
       </p>
-      @for (n of post.custom.nivel; track n) {
-        <span class="badge text-bg-primary me-1">{{ n }}</span>
-      }
-      @for (t of post.custom.stack.length ? post.custom.stack : post.tags; track t) {
-        <span class="badge text-bg-secondary me-1">{{ t }}</span>
-      }
     </header>
 
-    @if (post.coverUrl) {
-      <img [src]="post.coverUrl" [alt]="post.title" class="img-fluid rounded mb-4 w-100 cover-lg" />
-    }
+    <div class="cover" [class.cover-gen]="!post.coverUrl">
+      @if (post.coverUrl) {
+        <img [src]="post.coverUrl" [alt]="post.title" />
+      }
+    </div>
 
     <div class="post-body" [innerHTML]="html()"></div>
 
-    <footer class="mt-5 pt-3 border-top">
-      <a routerLink="/">← Todos os posts</a>
+    <footer class="mt-5 pt-3">
+      <a class="back" routerLink="/">← todos os posts</a>
     </footer>
   </article>
 } @else if (notFound()) {

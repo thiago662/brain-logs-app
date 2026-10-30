@@ -50,6 +50,7 @@ Blog técnico (tecnologia, estudos, carreira) publicado em `https://thiago662.gi
 ### Fase 4 — Visual ✅ (campos criados no ademiro; falta um post real para ver nível e stack)
 - [x] Trazer os cards com capa do projeto antigo (capa, nível, título, subtítulo, até 3 de stack, data)
 - [x] Autor e LinkedIn (valores do blog); nível e stack (campos do post) — tipados em `core/fields.ts`, tolerando ausência; LinkedIn só `https://`; sem `stack`, usa `tags`
+- [x] Identidade visual: tema escuro, verde `#4DF07D` / amarelo `#FFD93D` / azul `#3B7BFF`; Bricolage Grotesque + Geist + Geist Mono; logo em SVG (`core/logo.ts`, cérebro de linhas de log) com granulado só no logo grande; capas dos cards em listras de log (sem granulado); favicon SVG
 
 ### Fase 5 — Validação no LinkedIn
 - [ ] Publicar o post "projetos curtos" no ademiro

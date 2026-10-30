@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit, computed, inject, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { BlogInfo, BlogService, Post } from '../core/blog.service';
+import { nivelKey } from '../core/fields';
 import { renderMarkdown } from '../core/markdown';
 import { Seo } from '../core/seo';
 
@@ -17,6 +18,7 @@ export class PostPage implements OnInit {
   readonly slug = input.required<string>();
 
   protected readonly post = signal<Post | null>(null);
+  protected readonly nivelKey = nivelKey;
   protected readonly blog = signal<BlogInfo | null>(null);
   protected readonly notFound = signal(false);
   /** Inserido via [innerHTML]: o Angular sanitiza (remove scripts, eventos, javascript:). */

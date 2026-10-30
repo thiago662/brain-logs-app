@@ -32,3 +32,11 @@ export function readCustom(raw: unknown): PostCustom {
   const c = (raw ?? {}) as Record<string, unknown>;
   return { nivel: list(c['nivel']), stack: list(c['stack']) };
 }
+
+/** Chave estável do nível (sem acento, minúscula) para o CSS escolher a cor: "Intermediário" → "intermediario". */
+export function nivelKey(nivel: string): string {
+  return nivel
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase();
+}

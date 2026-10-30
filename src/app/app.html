@@ -1,9 +1,24 @@
-<nav class="navbar sticky-top bg-dark shadow">
-  <div class="container">
-    <a class="navbar-brand text-light fw-bold" routerLink="/">Brain Logs</a>
-  </div>
-</nav>
+<header class="site-header">
+  <nav class="wrap nav">
+    <a class="brand" routerLink="/" aria-label="Brain Logs, início">
+      <app-logo />
+      <span>brain<span class="suffix">_logs</span></span>
+    </a>
+    <a class="nav-link-bl" routerLink="/">~/posts</a>
+  </nav>
+</header>
 
-<main class="container py-4">
+<main class="wrap">
   <router-outlet />
 </main>
+
+<footer class="site-footer">
+  <div class="bars" aria-hidden="true">
+    <div style="width: 100%; background: var(--bl-green)"></div>
+    <div style="width: 62%; background: var(--bl-yellow)"></div>
+    <div style="width: 30%; background: var(--bl-blue)"></div>
+  </div>
+  <div class="wrap foot">
+    <span>brain_logs · tecnologia, estudos e carreira</span>
+  </div>
+</footer>

@@ -1,50 +1,67 @@
-@if (blog(); as blog) {
-  <header class="mb-4">
-    <h1 class="h3">{{ blog.name }}</h1>
-    @if (blog.description) {
-      <p class="text-body-secondary mb-1">{{ blog.description }}</p>
-    }
-    @if (blog.settings.autor) {
-      <p class="small text-body-secondary mb-0">
+@let b = blog();
+
+<section class="hero">
+  <div class="hero-text">
+    <span class="eyebrow">// blog técnico</span>
+    <h1>Logs de quem <span class="accent">aprende</span> construindo software.</h1>
+    <p class="lead">{{ b?.description || 'Tecnologia, estudos e carreira em desenvolvimento de software.' }}</p>
+    @if (b?.settings?.autor) {
+      <p class="byline">
         por
-        @if (blog.settings.linkedin) {
-          <a [href]="blog.settings.linkedin" target="_blank" rel="noopener">{{ blog.settings.autor }}</a>
+        @if (b?.settings?.linkedin) {
+          <a [href]="b?.settings?.linkedin" target="_blank" rel="noopener">{{ b?.settings?.autor }}</a>
         } @else {
-          {{ blog.settings.autor }}
+          {{ b?.settings?.autor }}
         }
       </p>
     }
-  </header>
-}
+    <div class="actions">
+      <a class="btn-bl" href="#posts">Ler os posts →</a>
+      @if (b?.settings?.linkedin) {
+        <a class="btn-bl-ghost" [href]="b?.settings?.linkedin" target="_blank" rel="noopener">LinkedIn ↗</a>
+      }
+    </div>
+  </div>
+  <div class="hero-art">
+    <app-logo [grain]="true" />
+    <span class="prompt"><span class="g">$</span> tail -f brain.log<span class="cursor"></span></span>
+  </div>
+</section>
+
+<div id="posts" class="posts-head">
+  <span class="eyebrow">// posts recentes</span>
+  <h2>Últimos posts</h2>
+</div>
 
 @if (posts(); as posts) {
-  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-    @for (post of posts; track post.id) {
-      <div class="col">
-        <a class="card h-100 text-decoration-none shadow-sm" [routerLink]="['/', post.slug]">
+  <div class="post-grid">
+    @for (post of posts; track post.id; let i = $index) {
+      @let stack = post.custom.stack.length ? post.custom.stack : post.tags;
+      <a class="post-card" [routerLink]="['/', post.slug]">
+        <div class="cover" [class.cover-gen]="!post.coverUrl" [attr.data-g]="i % 3">
           @if (post.coverUrl) {
-            <img [src]="post.coverUrl" class="card-img-top cover" [alt]="post.title" loading="lazy" />
-          } @else {
-            <div class="card-img-top cover bg-dark"></div>
+            <img [src]="post.coverUrl" [alt]="post.title" loading="lazy" />
           }
-          @let stack = post.custom.stack.length ? post.custom.stack : post.tags;
-          <div class="card-body">
-            @for (n of post.custom.nivel; track n) {
-              <span class="badge text-bg-primary me-1 mb-2">{{ n }}</span>
-            }
-            <h2 class="h5 card-title">{{ post.title }}</h2>
-            @if (post.subtitle) {
-              <p class="card-text text-body-secondary">{{ post.subtitle }}</p>
-            }
+          @if (post.custom.nivel[0]; as n) {
+            <span class="chip nivel" [attr.data-nivel]="nivelKey(n)">{{ n }}</span>
+          }
+        </div>
+        <div class="body">
+          <h3>{{ post.title }}</h3>
+          @if (post.subtitle) {
+            <p>{{ post.subtitle }}</p>
+          }
+          <div class="stack">
             @for (t of stack.slice(0, 3); track t) {
-              <span class="badge text-bg-secondary me-1">{{ t }}</span>
+              <span class="chip">{{ t }}</span>
             }
           </div>
-          <div class="card-footer bg-transparent border-0 small text-body-secondary">
-            {{ post.publishedAt | date: 'longDate' }}
-          </div>
-        </a>
-      </div>
+        </div>
+        <div class="foot">
+          <span>{{ post.publishedAt | date: 'dd MMM yyyy' }}</span>
+          <span class="go">ler →</span>
+        </div>
+      </a>
     } @empty {
       <p class="text-body-secondary">Nenhum post publicado ainda.</p>
     }

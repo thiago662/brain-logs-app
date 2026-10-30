@@ -32,6 +32,8 @@ src/app/
   core/blog.service.ts   leitura do Firestore + TransferState (ver "Dados")
   core/markdown.ts       renderMarkdown(md) → HTML (não sanitiza; ver "Segurança")
   core/seo.ts            título + meta tags (description, Open Graph, Twitter, robots)
+  core/fields.ts         leitura tolerante de settings (autor, linkedin) e custom (nivel, stack)
+  core/logo.ts           <app-logo [grain]>: marca SVG (granulado só no logo grande)
   posts/post-list.*      rota "/"       — lista de posts
   posts/post-page.*      rota "/:slug"  — post
   not-found.ts           rota "**"      — 404 (noindex)
@@ -117,7 +119,7 @@ blogs/{blogId}/posts/{postId}  slug, title, subtitle, summary, coverUrl, body (m
 ## Próximos passos (ver PLAN.md)
 
 1. **Usuário, no ademiro:** preencher no Brain Logs a URL pública `https://thiago662.github.io/brain-logs-app` e a URL do deploy `https://github.com/thiago662/brain-logs-app/actions/workflows/deploy.yml`; criar os campos `autor`, `linkedin`, `nivel`, `stack`; publicar posts reais (rascunhos em `C:\Projetos\Blogs\textos`, ex.: "projetos curtos").
-2. **Fase 4 — Visual:** cards com capa (o projeto antigo está no commit `2259d03`: `git show 2259d03:src/app/home/home.component.html`); exibir autor/LinkedIn (`settings`) e nível/stack (`custom`); tipar esses campos.
+2. **Fase 4 — Visual: feita.** Identidade em `src/styles.scss` (tokens `--bl-*`, tema escuro via `data-bs-theme`). Falta só conferir com um post real (nível, stack, capa).
 3. **Fase 5 — LinkedIn:** publicar "projetos curtos", rodar o deploy e validar o link no Post Inspector (https://www.linkedin.com/post-inspector/).
 
 ## Projetos relacionados
